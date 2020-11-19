@@ -1,46 +1,99 @@
 <template>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Validador de CPF e CNPJ</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
-</head>
-
-<body>
     <div class="doc-conteiner">
         <form class="form-document">
             <h1>Valide seu CPF/CNPJ</h1>
             <p>Para validar seu documento, selecione entre as opções CPF ou CNPJ, digite o número e pressione o botão confirmar.</p>
-            <div class="rdb-document">
+           <!--<div class="rdb-document">
                 <input type="radio" id="rdb-cpf" class="rdb-cpf" name="document" value="cpf" checked>
                 <label for="rdb-cpf">CPF</label>
                 <input type="radio" id="rdb-cnpj" class="rdb-cnpj" name="document" value="cnpj">
                 <label for="rdb-cnpj">CNPJ</label>
-            </div>
+            </div> -->
             <div class="input-document">
-                <input type="text" id="txt-document" maxlength="14" placeholder="Digite o número do documento" autofocus>
+                <input type="text" class="txt-document" id="c" v-model="cpf" maxlength="11" placeholder="Digite o número do CPF" 
+                autofocus required><span id="cpfResponse"></span>
             </div>
         </form>
         <div class="button-document">
-            <button class="btn-confirm">Confirmar</button>
+            <button class="btn-confirm" @click="cadastrar">Confirmar</button>
             <button class="btn-back">Voltar</button>
         </div>
     </div>
-    <script src="docValidator.js"></script>
     <!-- <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script> -->
-</body>
-</html>
 </template>
 
 <script>
 export default {
+  data: {
+    cpf:''
+  },
+
+  methods: {
+  
+  	cadastrar(event){
+    	event.preventDefault();
+      
+      if(!this.validaCpf(this.cpf))
+      {
+      	alert("CPF Inválido");
+      }else{
+      	alert("CPF Válido");
+      }
+    },
+    
+  	validaCpf(c){
+				if((c = c.replace(/[^\d]/g,"")).length != 11)
+    return false
+
+  if (c == "00000000000" ||
+    c == "11111111111" ||
+    c == "22222222222" ||
+    c == "33333333333" ||
+    c == "44444444444" ||
+    c == "55555555555" ||
+    c == "66666666666" ||
+    c == "77777777777" ||
+    c == "88888888888" ||
+    c == "99999999999")
+    return false;
+
+  var r;
+  var s = 0;
+  var i;
+
+  for (i=1; i<=9; i++)
+    s = s + parseInt(c[i-1]) * (11 - i);
+
+  r = (s * 10) % 11;
+
+  if ((r == 10) || (r == 11))
+    r = 0;
+
+  if (r != parseInt(c[9]))
+    return false;
+
+  s = 0;
+
+  for (i = 1; i <= 10; i++)
+    s = s + parseInt(c[i-1]) * (12 - i);
+
+  r = (s * 10) % 11;
+
+  if ((r == 10) || (r == 11))
+    r = 0;
+
+  if (r != parseInt(c[10]))
+    return false;
+
+  return true;
+}
+			}
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 /* * {
     margin: 0;
     padding: 0;

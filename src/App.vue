@@ -1,13 +1,11 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
     <Validator/>
   </div>
 </template>
 
 <script>
 import Validator from './components/Validator';
-
 export default {
   name: 'App',
   components: {
