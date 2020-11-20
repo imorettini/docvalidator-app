@@ -1,6 +1,6 @@
 # docvalidator-app
 
-> Validador de documentos em vue.js
+> Validador de CPF e CNPJ construído usando vue.js para estudo. 
 
 ## Build Setup
 
